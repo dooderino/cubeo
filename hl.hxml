@@ -1,0 +1,9 @@
+-lib heaps
+-lib hldx
+-lib hxbit
+-lib hscript
+-hl bin/hl/game.hl
+-main Game
+-D windowSize=1600x900
+-cp ./src
+-D resourcesPath=./resources

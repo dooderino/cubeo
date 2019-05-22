@@ -1,0 +1,9 @@
+-lib heaps
+-lib hxbit
+-lib hscript
+-swf bin/swf/game.swf
+-swf-header 1600:900:60:FFFFFF
+-swf-version 15.0
+-main Game
+-cp ./src
+-D resourcesPath=./resources
