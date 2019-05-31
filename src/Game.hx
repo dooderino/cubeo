@@ -14,8 +14,6 @@ class Game extends hxd.App {
 	public var fps : Text;
 	public var fps_flow : Flow;
 	public var flow : Flow;
-	public var switch_frame:Timer;
-	public var cell:Cell;
 
 	override function new() {
 		super();
@@ -29,13 +27,6 @@ class Game extends hxd.App {
 		fps_flow.layout = FlowLayout.Vertical;
 		fps = new h2d.Text(DefaultFont.get(), fps_flow); 
 		fps.text = "FPS: " + Std.string(0.0);
-
-		cell= new Cell(Std.int(s2d.width / 2), Std.int(s2d.height / 2));
-
-		switch_frame= new Timer(1000);
-		switch_frame.run= function() {
-			cell.State= cell.State % CellState.BlueSix;
-		}
 	}
 
 	override function update(dt:Float) {
@@ -46,9 +37,11 @@ class Game extends hxd.App {
 
 		super.render(e);
 	}
+
+	public static var inst : Game;
 	
 	static function main() {
 		hxd.Res.initEmbed();
-		new Game();
+		inst= new Game();
 	}
 }
