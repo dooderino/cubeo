@@ -29,12 +29,15 @@ class Cell implements hxbit.NetworkSerializable {
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
     private var obj : h2d.Object;
+    private var startx : Int;
+    private var starty : Int;
+    private var padding : Int;
 
     @:s public var Row(default, set) : Int;
 
     function set_Row(row : Int) {
         if (this.obj != null) {
-            this.obj.y= 64 * row + 12;
+            this.obj.y= starty + ((64 + padding) * row);
         }
         return this.Row= row;
     }
@@ -43,7 +46,7 @@ class Cell implements hxbit.NetworkSerializable {
 
     function set_Col(col : Int) {
         if (this.obj != null) {
-            this.obj.x= 64 * col + 12;
+            this.obj.x= startx + ((64 + padding) * col);
         }
         return this.Col= col;
     }
@@ -55,7 +58,7 @@ class Cell implements hxbit.NetworkSerializable {
         return this.State= s;
     }
 
-    public function new(row: Int, col: Int) {
+    public function new(row: Int, col: Int, startx : Int, starty : Int, padding : Int) {
         game= Game.inst;
         anim= new h2d.Anim(
             [
@@ -76,7 +79,11 @@ class Cell implements hxbit.NetworkSerializable {
             0.0);
 
         obj= new h2d.Object(game.s2d);
-        
+
+        this.startx= startx;
+        this.starty= starty;
+        this.padding= padding;
+
         Row= row;
         Col= col;
 

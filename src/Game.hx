@@ -1,3 +1,4 @@
+import h3d.shader.SkinBase;
 import h3d.Vector;
 import haxe.Timer;
 import h2d.Bitmap;
@@ -14,6 +15,7 @@ class Game extends hxd.App {
 	public var fps : Text;
 	public var fps_flow : Flow;
 	public var flow : Flow;
+	public var board : Array<Cell>;
 
 	override function new() {
 		super();
@@ -27,6 +29,17 @@ class Game extends hxd.App {
 		fps_flow.layout = FlowLayout.Vertical;
 		fps = new h2d.Text(DefaultFont.get(), fps_flow); 
 		fps.text = "FPS: " + Std.string(0.0);
+
+		//cell= new Cell(Std.int(s2d.width / 2), Std.int(s2d.height / 2));
+		var startx= Std.int(s2d.width / 2) - Std.int((64+2)*6);
+		var starty= Std.int(s2d.height / 2) - Std.int((64+2)*6);
+
+		board= new Array<Cell>();
+		for (row in 0...12) {
+			for (col in 0...12) {
+				board.push(new Cell(row, col, startx, starty, 2));
+			}
+		}
 	}
 
 	override function update(dt:Float) {
