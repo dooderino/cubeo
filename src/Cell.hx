@@ -1,30 +1,12 @@
 package;
 
-import hxbit.NetworkSerializable;
 import h2d.Anim;
 import h2d.Bitmap;
 import h2d.Object;
+import CellState;
 
-@:enum
-abstract CellState(Int) from Int to Int
-{
-    var Empty= 0;
-    var RedOne= 1;
-    var RedTwo= 2;
-    var RedThree= 3;
-    var RedFour= 4;
-    var RedFive=5 ;
-    var RedSix= 6;
-    var BlueOne= 7;
-    var BlueTwo= 8;
-    var BlueThree= 9;
-    var BlueFour= 10;
-    var BlueFive= 11;
-    var BlueSix= 12;
-    var Invalid= 13;
-}
 
-class Cell implements hxbit.NetworkSerializable {
+class Cell {
     private var game : Game;
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
@@ -50,6 +32,8 @@ class Cell implements hxbit.NetworkSerializable {
         }
         return this.Col= col;
     }
+
+    
     @:s public var State(default, set) : CellState;
 
     function set_State(s : CellState) {
