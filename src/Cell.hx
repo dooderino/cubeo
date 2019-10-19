@@ -57,6 +57,7 @@ class Cell {
                 hxd.Res.blue_four.toTile(),
                 hxd.Res.blue_five.toTile(),
                 hxd.Res.blue_six.toTile(),
+                hxd.Res.border.toTile()
             ], 
             0.0);
 
