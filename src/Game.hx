@@ -9,14 +9,15 @@ import Camera;
 import CameraController;
 
 class Game extends hxd.App {
-	public var fps : Text;
-	public var fps_flow : Flow;
-	public var flow : Flow;
-	public var board : Board;
-	public var view : BoardView;
-	public var camera : Camera;
-	public var cameraController : CameraController;
-
+	var sceneWidthStart:Float;
+	var sceneHeightStart:Float;
+	var sceneDiagonalStart:Float;
+	var fps : Text;
+	var fps_flow : Flow;
+	var flow : Flow;
+	var board : Board;
+	var view : BoardView;
+	var camera : Camera;
 
 	override function new() {
 		super();
@@ -31,12 +32,16 @@ class Game extends hxd.App {
 		fps= new h2d.Text(DefaultFont.get(), fps_flow); 
 		fps.text= "FPS: " + Std.string(0.0);
 
-		var startx= Std.int(s2d.width / 2) - Std.int((Cell.size+Cell.padding)*6);
-		var starty= Std.int(s2d.height / 2) - Std.int((Cell.size+Cell.padding)*6);
+		sceneWidthStart= s2d.width;
+		sceneHeightStart= s2d.height;
+		sceneDiagonalStart= Math.sqrt(sceneWidthStart*sceneWidthStart + sceneHeightStart*sceneHeightStart);
+
+		var startx= Std.int(s2d.width / 2);
+		var starty= Std.int(s2d.height / 2);
 
 		camera= new Camera(s2d);
 		camera.viewX= s2d.width * 0.5;
-		cameraController= new CameraController(camera, s3d);
+		camera.zoom= 0.8;
 
 		board= new Board(12, 12);
 		view= new BoardView(board, camera);
@@ -51,6 +56,19 @@ class Game extends hxd.App {
 		fps.text= "Zoom: " + camera.zoom;
 
 		super.render(e);
+	}
+
+	public override function onResize() {
+		var sceneWidth= s2d.width;
+		var sceneHeight= s2d.height;
+		var sceneDiagonal= Math.sqrt(sceneWidth*sceneWidth + sceneHeight*sceneHeight);
+		var zoom= sceneDiagonal / sceneDiagonalStart;
+
+		camera.zoom= zoom * 0.8;
+
+		var viewCenterX= Std.int(s2d.width / 2);
+		var viewCenterY= Std.int(s2d.height / 2);
+		view.setPosition(viewCenterX, viewCenterY);
 	}
 
 	public static var inst : Game;

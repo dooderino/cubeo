@@ -8,6 +8,7 @@ class Camera extends h2d.Object
     public var viewX(get, set):Float;
     public var viewY(get, set):Float;
     @:isVar public var zoom(get, set):Float;
+    public var minZoom(default, null):Float= 0.3;
 
     var scene:Scene;
 
@@ -42,9 +43,12 @@ class Camera extends h2d.Object
 
     private function set_zoom(newZoom:Float):Float
     {
-        this.zoom= newZoom;
+        if (newZoom < minZoom)
+            this.zoom= minZoom;
+        else
+            this.zoom= newZoom;
         this.setScale(newZoom);
-        return newZoom;
+        return this.zoom;
     }
 
     private function get_zoom():Float 

@@ -36,7 +36,13 @@ class CameraController extends h3d.scene.Object {
 
 		switch(e.kind) {
 		case EWheel:
-            camera.zoom += e.wheelDelta * 0.01;
+            var currentZoom= camera.zoom;
+            currentZoom += e.wheelDelta * 0.001;
+            if (currentZoom < camera.minZoom)
+                currentZoom= camera.minZoom;
+
+            camera.zoom= currentZoom;
+
             if (camera.zoom < 0) {
                 camera.zoom= 0.0;
             }
