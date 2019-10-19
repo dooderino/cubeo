@@ -7,34 +7,33 @@ import CellState;
 
 
 class Cell {
-    private var game : Game;
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
-    private var obj : h2d.Object;
-    private var startx : Int;
-    private var starty : Int;
-    private var padding : Int;
+    public var obj : h2d.Object;
+    public static var size : Int= 64;
+    public static var padding : Int= 4;
+    public static var scale : Float = 1.0;
 
-    @:s public var Row(default, set) : Int;
+    public var Row(default, set) : Int;
 
     function set_Row(row : Int) {
-        if (this.obj != null) {
-            this.obj.y= starty + ((64 + padding) * row);
+        if (this.obj != null) {            
+            var pad= (padding * scale);
+            this.obj.y= (row * (size * scale + pad * scale));
         }
         return this.Row= row;
     }
 
-    @:s public var Col(default, set) : Int;
+    public var Col(default, set) : Int;
 
     function set_Col(col : Int) {
         if (this.obj != null) {
-            this.obj.x= startx + ((64 + padding) * col);
+            this.obj.x= (col * (size * scale + padding * scale));            
         }
         return this.Col= col;
     }
-
     
-    @:s public var State(default, set) : CellState;
+    public var State(default, set) : CellState;
 
     function set_State(s : CellState) {
         anim.currentFrame= cast(s, Float);
@@ -42,8 +41,7 @@ class Cell {
         return this.State= s;
     }
 
-    public function new(row: Int, col: Int, startx : Int, starty : Int, padding : Int) {
-        game= Game.inst;
+    public function new(row: Int, col: Int, s:CellState) {
         anim= new h2d.Anim(
             [
                 hxd.Res.empty.toTile(), 
@@ -62,15 +60,13 @@ class Cell {
             ], 
             0.0);
 
-        obj= new h2d.Object(game.s2d);
+        obj= new h2d.Object(Game.inst.s2d);
+        obj.setScale(scale);
 
-        this.startx= startx;
-        this.starty= starty;
-        this.padding= padding;
+        bmp= new Bitmap(anim.getFrame(), obj);    
 
         Row= row;
         Col= col;
-
-        bmp= new Bitmap(anim.getFrame(), obj);    
+        State= s;
     }
 }

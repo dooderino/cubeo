@@ -3,8 +3,8 @@ import CellState;
 import hxbit.NetworkSerializable;
 
 class Board implements hxbit.NetworkSerializable {
-    var width(default, null):Int= 0;
-    var height(default, null):Int= 0;
+    public var width(default, null):Int= 0;
+    public var height(default, null):Int= 0;
     var index(default, null):Int =0;
     @:s var data:Array<CellState>; 
 
@@ -14,7 +14,7 @@ class Board implements hxbit.NetworkSerializable {
 
     public function next() {
         index++;
-        var row= Std.int(index/width);
+        var row= Std.int(index/height);
         var col= index % width;
         return data[width * row + col];
     }
@@ -23,12 +23,12 @@ class Board implements hxbit.NetworkSerializable {
         index= 0;
     }
 
-    public function set(x:Int, y:Int, s:CellState) {
-        data[width * y + x]= s;
+    public function set(row:Int, col:Int, s:CellState) {
+        data[width * row + col]= s;
     }
 
-    public function get(x:Int, y:Int) {
-        return data[width * y + x];
+    public function get(row:Int, col:Int) {
+        return data[width * row + col];
     }
 
     public function new(gridWith:Int, gridHeight:Int) {
@@ -41,4 +41,6 @@ class Board implements hxbit.NetworkSerializable {
         }
     }
 }
+
+
 
