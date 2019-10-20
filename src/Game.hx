@@ -31,6 +31,7 @@ class Game extends hxd.App {
 		fps_flow.layout= FlowLayout.Vertical;
 		fps= new h2d.Text(DefaultFont.get(), fps_flow); 
 		fps.text= "FPS: " + Std.string(0.0);
+		fps.setScale(2.0);
 
 		sceneWidthStart= s2d.width;
 		sceneHeightStart= s2d.height;
@@ -52,8 +53,7 @@ class Game extends hxd.App {
 	}
 
 	override function render(e:h3d.Engine) {
-		//fps.text= "FPS: " + Std.string(e.fps);
-		fps.text= "Zoom: " + camera.zoom;
+		fps.text= "FPS: " + Std.string(e.fps);
 
 		super.render(e);
 	}

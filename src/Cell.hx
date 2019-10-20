@@ -3,6 +3,7 @@ package;
 import h2d.Anim;
 import h2d.Bitmap;
 import h2d.Object;
+import h3d.Vector;
 import CellState;
 
 
@@ -10,6 +11,7 @@ class Cell {
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
     public var obj : h2d.Object;
+    public var interactive : h2d.Interactive;
     public static var size : Int= 64;
     public static var padding : Int= 4;
     public static var scale : Float = 1.0;
@@ -64,7 +66,14 @@ class Cell {
         obj= new h2d.Object(Game.inst.s2d);
         obj.setScale(scale);
 
-        bmp= new Bitmap(anim.getFrame(), obj);    
+        bmp= new Bitmap(anim.getFrame(), obj);
+        interactive= new h2d.Interactive(obj.getBounds().width, obj.getBounds().height, bmp);
+        interactive.onOver= function(e:hxd.Event) {
+            bmp.colorAdd= new Vector(0.5,0,1,1);
+            var state:Int = cast(State, Int);
+            state++;
+            State = cast(state, CellState);
+        }
 
         Row= row;
         Col= col;
