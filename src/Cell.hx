@@ -67,12 +67,9 @@ class Cell {
         obj.setScale(scale);
 
         bmp= new Bitmap(anim.getFrame(), obj);
+
         interactive= new h2d.Interactive(obj.getBounds().width, obj.getBounds().height, bmp);
         interactive.onOver= function(e:hxd.Event) {
-            bmp.colorAdd= new Vector(0.5,0,1,1);
-            var state:Int = cast(State, Int);
-            state++;
-            State = cast(state, CellState);
         }
 
         Row= row;
