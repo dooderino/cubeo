@@ -3,7 +3,7 @@ package;
 import h2d.Object;
 import h2d.Scene;
 import CellStates;
-import Cell;
+import CellView;
 import Board;
 import BoardIterator;
 
@@ -14,7 +14,7 @@ class BoardView {
     var totalWidth:Float= 0.0;
     var totalHeight:Float= 0.0;
     var root : h2d.Object;
-    var data:Array<Cell>; 
+    var data:Array<CellView>; 
 
     public function hasNext() {
         return index < width * height;
@@ -48,16 +48,16 @@ class BoardView {
         width= board.width;
         height= board.height;
 
-        totalWidth= (width * (Cell.size * Cell.scale)) + (width * (Cell.padding * Cell.scale));
-        totalHeight= (height * (Cell.size * Cell.scale)) + (height * (Cell.padding * Cell.scale));
+        totalWidth= (width * (CellView.size * CellView.scale)) + (width * (CellView.padding * CellView.scale));
+        totalHeight= (height * (CellView.size * CellView.scale)) + (height * (CellView.padding * CellView.scale));
 
         var offset_x= totalWidth * 0.5;
         var offset_y= totalHeight * 0.5;
 
         index= 0;
-        data= new Array<Cell>();
+        data= new Array<CellView>();
         for (board_cell in new BoardIterator(board)) {
-            var board_view_cell= new Cell(board_cell.row, board_cell.col, board_cell.state);
+            var board_view_cell= new CellView(board_cell.row, board_cell.col, board_cell.state);
             board_view_cell.obj.x -= offset_x;
             board_view_cell.obj.y -= offset_y;
             root.addChild(board_view_cell.obj);

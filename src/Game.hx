@@ -2,11 +2,9 @@ import hxd.Res;
 import hxd.res.DefaultFont;
 import h2d.Flow;
 import h2d.Text;
-import Cell;
 import Board;
 import BoardView;
 import Camera;
-import CameraController;
 
 class Game extends hxd.App {
 	var sceneWidthStart:Float;

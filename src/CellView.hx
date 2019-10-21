@@ -6,7 +6,7 @@ import h2d.Object;
 import CellStates;
 
 
-class Cell {
+class CellView {
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
     public var obj : h2d.Object;
