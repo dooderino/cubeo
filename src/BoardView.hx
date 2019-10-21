@@ -2,7 +2,7 @@ package;
 
 import h2d.Object;
 import h2d.Scene;
-import CellState;
+import CellStates;
 import Cell;
 import Board;
 import BoardIterator;
@@ -31,7 +31,7 @@ class BoardView {
         index= 0;
     }
 
-    public function set(row:Int, col:Int, s:CellState) {
+    public function set(row:Int, col:Int, s:ellStates) {
         data[width * row + col].State= s;
     }
 

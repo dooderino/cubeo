@@ -4,7 +4,7 @@ import h2d.Anim;
 import h2d.Bitmap;
 import h2d.Object;
 import h3d.Vector;
-import CellState;
+import CellStates;
 
 
 class Cell {
@@ -35,15 +35,15 @@ class Cell {
         return this.Col= col;
     }
     
-    public var State(default, set) : CellState;
+    public var State(default, set) : CellStates;
 
-    function set_State(s : CellState) {
+    function set_State(s : CellStates) {
         anim.currentFrame= cast(s, Float);
         bmp.tile= anim.getFrame();
         return this.State= s;
     }
 
-    public function new(row: Int, col: Int, s:CellState) {
+    public function new(row: Int, col: Int, s:CellStates) {
         anim= new h2d.Anim(
             [
                 hxd.Res.empty.toTile(), 

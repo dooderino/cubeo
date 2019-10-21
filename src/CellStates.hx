@@ -1,5 +1,5 @@
 
-enum abstract CellState(Int)
+enum abstract CellStates(Int)
 {
     var Empty= 0;
     var RedOne= 1;
