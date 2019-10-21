@@ -31,7 +31,7 @@ class BoardView {
         index= 0;
     }
 
-    public function set(row:Int, col:Int, s:ellStates) {
+    public function set(row:Int, col:Int, s:CellStates) {
         data[width * row + col].State= s;
     }
 

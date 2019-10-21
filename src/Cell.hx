@@ -3,7 +3,6 @@ package;
 import h2d.Anim;
 import h2d.Bitmap;
 import h2d.Object;
-import h3d.Vector;
 import CellStates;
 
 
