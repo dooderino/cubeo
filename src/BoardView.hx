@@ -1,8 +1,6 @@
 package;
 
 import h2d.Object;
-import h2d.Scene;
-import CellStates;
 import CellView;
 import Board;
 import BoardIterator;

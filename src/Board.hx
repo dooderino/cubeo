@@ -6,6 +6,7 @@ class Board implements hxbit.NetworkSerializable {
     public var width(default, null):Int= 0;
     public var height(default, null):Int= 0;
     var index(default, null):Int =0;
+    @:s public var uid : Int;
     @:s var data:Array<CellStates>; 
 
     public function hasNext() {
@@ -31,9 +32,10 @@ class Board implements hxbit.NetworkSerializable {
         return data[width * row + col];
     }
 
-    public function new(gridWith:Int, gridHeight:Int) {
+    public function new(gridWith:Int, gridHeight:Int, uid= 0) {
         width= gridWith;
         height= gridHeight;
+        this.uid= uid;
         index= 0;
         data= new Array<CellStates>();
         for (i in 0...width*height) {
