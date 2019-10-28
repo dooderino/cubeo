@@ -1,13 +1,10 @@
 package;
 
-import h2d.Anim;
 import h2d.Bitmap;
-import h2d.Object;
-import CellStates;
-
+import BoardState;
 
 class CellView {
-    var board: Board;
+    var boardState: BoardState;
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
     public var obj : h2d.Object;
@@ -43,8 +40,8 @@ class CellView {
         return this.State= s;
     }
 
-    public function new(board:Board, row: Int, col: Int, s:CellStates) {
-        this.board= board;
+    public function new(board:BoardState, row: Int, col: Int, s:CellStates) {
+        boardState= board;
         anim= new h2d.Anim(
             [
                 hxd.Res.empty.toTile(), 

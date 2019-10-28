@@ -1,7 +1,7 @@
 package;
 
 import CellStates;
-import Board;
+import BoardState;
 
 class BoardIteratorObject {
   public var index(default, null):Int;
@@ -9,7 +9,7 @@ class BoardIteratorObject {
   public var col(default, null):Int;
   public var state(default,null):CellStates;
 
-  public inline function new(index:Int, board:Board) {
+  public inline function new(index:Int, board:BoardState) {
     this.index = index;
     this.row = Std.int(index / board.height);
     this.col = index % board.width;

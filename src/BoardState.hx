@@ -2,7 +2,7 @@
 import CellStates;
 import hxbit.NetworkSerializable;
 
-class Board implements hxbit.NetworkSerializable {
+class BoardState implements hxbit.NetworkSerializable {
     var game : Game;
     @:s public var width:Int;
     @:s public var height:Int;
@@ -59,7 +59,7 @@ class Board implements hxbit.NetworkSerializable {
 		init();
 
 		if( uid != 0 && uid == game.uid ) {
-			game.board = this;
+			game.boardState = this;
 			game.host.self.ownerObject = this;
 		    var startx= Std.int(game.s2d.width / 2);
 		    var starty= Std.int(game.s2d.height / 2);

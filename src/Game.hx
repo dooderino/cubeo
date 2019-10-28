@@ -2,7 +2,7 @@ import hxd.Res;
 import hxd.res.DefaultFont;
 import h2d.Flow;
 import h2d.Text;
-import Board;
+import BoardState;
 import BoardView;
 import Camera;
 
@@ -16,7 +16,7 @@ class Game extends hxd.App {
 	var fps : Text;
 	var fps_flow : Flow;
 	var flow : Flow;
-	public var board : Board;
+	public var boardState : BoardState;
 	public var view : BoardView;
 	public var camera : Camera;
 	public var host : hxd.net.SocketHost;
@@ -58,7 +58,7 @@ class Game extends hxd.App {
 			});
 			host.onMessage = function(b,uid:Int) {
 				log("Client identified ("+uid+")");
-				var boardClient = new Board(12, 12, uid);
+				var boardClient = new BoardState(12, 12, uid);
 				b.ownerObject = boardClient;
 				b.sync();
 			};
@@ -84,12 +84,12 @@ class Game extends hxd.App {
 	}
 
 	function start() {
-		board= new Board(12, 12);
+		boardState= new BoardState(12, 12);
 
 		var startx= Std.int(s2d.width / 2);
 		var starty= Std.int(s2d.height / 2);
 
-		view= new BoardView(board, camera);
+		view= new BoardView(boardState, camera);
 		view.setPosition(startx, starty);
 
 		log("Live");
