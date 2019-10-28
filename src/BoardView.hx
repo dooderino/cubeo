@@ -13,6 +13,7 @@ class BoardView {
     var totalHeight:Float= 0.0;
     var root : h2d.Object;
     var data:Array<CellView>; 
+    var board: Board;
 
     public function hasNext() {
         return index < width * height;
@@ -42,6 +43,7 @@ class BoardView {
     }
 
     public function new(board:Board, object:Object) {
+        this.board= board;
         root= object;
         width= board.width;
         height= board.height;
@@ -55,7 +57,7 @@ class BoardView {
         index= 0;
         data= new Array<CellView>();
         for (board_cell in new BoardIterator(board)) {
-            var board_view_cell= new CellView(board_cell.row, board_cell.col, board_cell.state);
+            var board_view_cell= new CellView(board, board_cell.row, board_cell.col, board_cell.state);
             board_view_cell.obj.x -= offset_x;
             board_view_cell.obj.y -= offset_y;
             root.addChild(board_view_cell.obj);

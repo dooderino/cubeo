@@ -7,15 +7,18 @@ import BoardView;
 import Camera;
 
 class Game extends hxd.App {
+	static var HOST = "127.0.0.1";
+	static var PORT = 6676;
+
 	var sceneWidthStart:Float;
 	var sceneHeightStart:Float;
 	var sceneDiagonalStart:Float;
 	var fps : Text;
 	var fps_flow : Flow;
 	var flow : Flow;
-	var board : Board;
-	var view : BoardView;
-	var camera : Camera;
+	public var board : Board;
+	public var view : BoardView;
+	public var camera : Camera;
 	public var host : hxd.net.SocketHost;
 	public var event : hxd.WaitEvent;
 	public var uid : Int;
@@ -49,23 +52,20 @@ class Game extends hxd.App {
 		camera.viewX= s2d.width * 0.5;
 		camera.zoom= 0.8;
 
-		board= new Board(12, 12);
-		view= new BoardView(board, camera);
-		view.setPosition(startx, starty);
-
 		try {
 			host.wait(HOST, PORT, function(c) {
 				log("Client Connected");
 			});
-			host.onMessage = function(c,uid:Int) {
+			host.onMessage = function(b,uid:Int) {
 				log("Client identified ("+uid+")");
-				var cursorClient = new Cursor(0x0000FF, uid);
-				c.ownerObject = cursorClient;
-				c.sync();
+				var boardClient = new Board(12, 12, uid);
+				b.ownerObject = boardClient;
+				b.sync();
 			};
 			log("Server Started");
 
 			start();
+
 		} catch( e : Dynamic ) {
 
 			// we could not start the server
@@ -83,7 +83,22 @@ class Game extends hxd.App {
 		}
 	}
 
+	function start() {
+		board= new Board(12, 12);
+
+		var startx= Std.int(s2d.width / 2);
+		var starty= Std.int(s2d.height / 2);
+
+		view= new BoardView(board, camera);
+		view.setPosition(startx, starty);
+
+		log("Live");
+		host.makeAlive();
+	}
+
 	override function update(dt:Float) {
+		event.update(dt);
+		host.flush();
 	}
 
 	override function render(e:h3d.Engine) {

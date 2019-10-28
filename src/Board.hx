@@ -3,8 +3,9 @@ import CellStates;
 import hxbit.NetworkSerializable;
 
 class Board implements hxbit.NetworkSerializable {
-    public var width(default, null):Int= 0;
-    public var height(default, null):Int= 0;
+    var game : Game;
+    @:s public var width:Int;
+    @:s public var height:Int;
     var index(default, null):Int =0;
     @:s public var uid : Int;
     @:s var data:Array<CellStates>; 
@@ -32,6 +33,10 @@ class Board implements hxbit.NetworkSerializable {
         return data[width * row + col];
     }
 
+    public function networkAllow( op : hxbit.NetworkSerializable.Operation, propId : Int, client : hxbit.NetworkSerializable ) : Bool {
+		return client == this;
+	}
+
     public function new(gridWith:Int, gridHeight:Int, uid= 0) {
         width= gridWith;
         height= gridHeight;
@@ -41,7 +46,27 @@ class Board implements hxbit.NetworkSerializable {
         for (i in 0...width*height) {
             data.push(Empty);
         }
+        init();
     }
+
+    function init() {
+        game= Game.inst;
+        game.log("Init " + this);
+        enableReplication= true;
+    }
+
+    public function alive() {
+		init();
+
+		if( uid == game.uid ) {
+			game.board = this;
+			game.host.self.ownerObject = this;
+		    var startx= Std.int(game.s2d.width / 2);
+		    var starty= Std.int(game.s2d.height / 2);
+			game.view= new BoardView(this, game.camera);
+			game.view.setPosition(startx, starty);
+		}
+	}
 }
 
 
