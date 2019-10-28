@@ -58,7 +58,7 @@ class Board implements hxbit.NetworkSerializable {
     public function alive() {
 		init();
 
-		if( uid == game.uid ) {
+		if( uid != 0 && uid == game.uid ) {
 			game.board = this;
 			game.host.self.ownerObject = this;
 		    var startx= Std.int(game.s2d.width / 2);
