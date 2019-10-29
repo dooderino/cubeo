@@ -9,6 +9,8 @@ import Camera;
 class Game extends hxd.App {
 	static var HOST = "127.0.0.1";
 	static var PORT = 6676;
+	public var isServer : Bool;
+	public var isClient : Bool;
 
 	var sceneWidthStart:Float;
 	var sceneHeightStart:Float;
@@ -28,6 +30,7 @@ class Game extends hxd.App {
 	}
 
 	override function init() {
+
 		event = new hxd.WaitEvent();
 		host = new hxd.net.SocketHost();
 		host.setLogger(function(msg) log(msg));
@@ -58,11 +61,18 @@ class Game extends hxd.App {
 			});
 			host.onMessage = function(b,uid:Int) {
 				log("Client identified ("+uid+")");
-				var boardClient = new BoardState(12, 12, uid);
-				b.ownerObject = boardClient;
+				boardState= new BoardState(12, 12, uid);
+				b.ownerObject = boardState;
 				b.sync();
+				var startx= Std.int(s2d.width / 2);
+				var starty= Std.int(s2d.height / 2);
+
+				view= new BoardView(boardState, camera);
+				view.setPosition(startx, starty);
 			};
 			log("Server Started");
+
+			isServer= true;
 
 			start();
 
@@ -80,6 +90,9 @@ class Game extends hxd.App {
 				log("Connected to server");
 				host.sendMessage(uid);
 			});
+
+			isClient= true;
+
 		}
 	}
 
@@ -99,6 +112,8 @@ class Game extends hxd.App {
 	override function update(dt:Float) {
 		event.update(dt);
 		host.flush();
+		if (view != null)
+			view.updateView();
 	}
 
 	override function render(e:h3d.Engine) {

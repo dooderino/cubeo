@@ -30,8 +30,9 @@ class BoardView {
         index= 0;
     }
 
-    public function set(row:Int, col:Int, s:CellStates) {
-        data[width * row + col].State= s;
+    @:rpc public function set(row:Int, col:Int, s:CellStates) {
+        boardState.set(row, col, s);
+//        data[width * row + col].State= s;
     }
 
     public function get(row:Int, col:Int) {
@@ -40,6 +41,14 @@ class BoardView {
 
     public function setPosition(x:Int, y:Int) {
         root.setPosition(x, y);
+    }
+
+    public function updateView() {
+        if (data.length == 0) return;
+
+        for (board_cell in new BoardIterator(boardState)) {
+            data[width * board_cell.row + board_cell.col].State= board_cell.state;
+        }
     }
 
     public function new(board:BoardState, object:Object) {
@@ -57,10 +66,11 @@ class BoardView {
         index= 0;
         data= new Array<CellView>();
         for (board_cell in new BoardIterator(boardState)) {
-            var board_view_cell= new CellView(boardState, board_cell.row, board_cell.col, board_cell.state);
+            var board_view_cell= new CellView(this, board_cell.row, board_cell.col, board_cell.state);
             board_view_cell.obj.x -= offset_x;
             board_view_cell.obj.y -= offset_y;
             root.addChild(board_view_cell.obj);
+            data.push(board_view_cell);
         }
     }
 }

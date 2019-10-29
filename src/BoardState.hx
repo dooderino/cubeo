@@ -58,13 +58,13 @@ class BoardState implements hxbit.NetworkSerializable {
     public function alive() {
 		init();
 
-		if( uid != 0 && uid == game.uid ) {
-			game.boardState = this;
-			game.host.self.ownerObject = this;
-		    var startx= Std.int(game.s2d.width / 2);
-		    var starty= Std.int(game.s2d.height / 2);
-			game.view= new BoardView(this, game.camera);
-			game.view.setPosition(startx, starty);
+		if( uid != 0 && uid == game.uid && game.isClient ) {
+//			game.boardState = this;
+//			game.host.self.ownerObject = this;
+//		    var startx= Std.int(game.s2d.width / 2);
+//		    var starty= Std.int(game.s2d.height / 2);
+//			game.view= new BoardView(this, game.camera);
+//			game.view.setPosition(startx, starty);
 		}
 	}
 }

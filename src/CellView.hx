@@ -1,10 +1,10 @@
 package;
 
 import h2d.Bitmap;
-import BoardState;
+import BoardView;
 
 class CellView {
-    var boardState: BoardState;
+    var boardView: BoardView;
     private var anim : h2d.Anim;
     private var bmp : h2d.Bitmap;
     public var obj : h2d.Object;
@@ -40,8 +40,8 @@ class CellView {
         return this.State= s;
     }
 
-    public function new(board:BoardState, row: Int, col: Int, s:CellStates) {
-        boardState= board;
+    public function new(view:BoardView, row: Int, col: Int, s:CellStates) {
+        boardView= view;
         anim= new h2d.Anim(
             [
                 hxd.Res.empty.toTile(), 
@@ -65,9 +65,9 @@ class CellView {
         obj.setScale(scale);
 
         bmp= new Bitmap(anim.getFrame(), obj);
-
         interactive= new h2d.Interactive(obj.getBounds().width, obj.getBounds().height, bmp);
-        interactive.onOver= function(e:hxd.Event) {
+        interactive.onClick= function(e:hxd.Event) {
+            boardView.set(Row, Col, CellStates.BlueFive);
         }
 
         Row= row;
