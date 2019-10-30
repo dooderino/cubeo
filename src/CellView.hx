@@ -48,6 +48,14 @@ class CellView {
         return this.State= s;
     }
 
+    public var CursorState(default, set) : CursorStates;
+
+    function set_CursorState(cs: CursorStates) {
+        cell_hover_anim.currentFrame= cast(cs, Float);
+        cell_hover_bmp.tile= cell_hover_anim.getFrame();
+        return this.CursorState= cs;
+    }
+
     public function new(view:BoardView, row: Int, col: Int, s:CellStates) {
         boardView= view;
         cell_state_anim= new h2d.Anim(
@@ -89,13 +97,11 @@ class CellView {
         interactive= new h2d.Interactive(obj.getBounds().width, obj.getBounds().height, cell_state_bmp);
 
         interactive.onOver= function(e:hxd.Event) {
-            cell_hover_anim.currentFrame= cast(CursorStates.HoverDicePool, Float);
-            cell_hover_bmp.tile= cell_hover_anim.getFrame();
+            CursorState= CursorStates.HoverDicePool;
         }
 
         interactive.onOut= function(e:hxd.Event) {
-            cell_hover_anim.currentFrame= cast(CursorStates.HoverNothing, Float);
-            cell_hover_bmp.tile= cell_hover_anim.getFrame();
+            CursorState= CursorStates.HoverNothing;
         }
 
         interactive.onClick= function(e:hxd.Event) {
