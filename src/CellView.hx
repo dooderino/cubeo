@@ -67,7 +67,10 @@ class CellView {
         bmp= new Bitmap(anim.getFrame(), obj);
         interactive= new h2d.Interactive(obj.getBounds().width, obj.getBounds().height, bmp);
         interactive.onClick= function(e:hxd.Event) {
-            boardView.set(Row, Col, CellStates.BlueFive);
+            if (Game.inst.isClient)
+                boardView.set(Row, Col, CellStates.BlueFive);
+            else 
+                boardView.set(Row, Col, CellStates.RedFive);
         }
 
         Row= row;
