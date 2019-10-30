@@ -71,8 +71,11 @@ class BoardView {
             board_view_cell.obj.y -= offset_y;
             board_view_cell.hover.x= board_view_cell.obj.x;
             board_view_cell.hover.y= board_view_cell.obj.y;
+            board_view_cell.placement.x= board_view_cell.obj.x;
+            board_view_cell.placement.y= board_view_cell.obj.y;
             root.addChild(board_view_cell.obj);
             root.addChild(board_view_cell.hover);
+            root.addChild(board_view_cell.placement);
             data.push(board_view_cell);
         }
     }

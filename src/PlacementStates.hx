@@ -1,4 +1,5 @@
 enum abstract PlacementStates(Int) {
-    OkMove;
-    InvalidMove;
+    var None= 0;
+    var OkMove= 1;
+    var InvalidMove= 2;
 }
