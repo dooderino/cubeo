@@ -69,7 +69,10 @@ class BoardView {
             var board_view_cell= new CellView(this, board_cell.row, board_cell.col, board_cell.state);
             board_view_cell.obj.x -= offset_x;
             board_view_cell.obj.y -= offset_y;
+            board_view_cell.hover.x= board_view_cell.obj.x;
+            board_view_cell.hover.y= board_view_cell.obj.y;
             root.addChild(board_view_cell.obj);
+            root.addChild(board_view_cell.hover);
             data.push(board_view_cell);
         }
     }

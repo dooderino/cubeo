@@ -1,6 +1,6 @@
 enum abstract CursorStates(Int) {
-    HoverNothing;
-    HoverDicePool;
-    PlaceRedDice;
-    PlaceBlueDice;
+    var HoverNothing= 0;
+    var HoverDicePool= 1;
+    var PlaceRedDice= 2;
+    var PlaceBlueDice= 3;
 }
