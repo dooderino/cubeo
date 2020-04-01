@@ -48,9 +48,6 @@ class Game extends hxd.App {
 		sceneHeightStart= s2d.height;
 		sceneDiagonalStart= Math.sqrt(sceneWidthStart*sceneWidthStart + sceneHeightStart*sceneHeightStart);
 
-		var startx= Std.int(s2d.width / 2);
-		var starty= Std.int(s2d.height / 2);
-
 		camera= new Camera(s2d);
 		camera.viewX= s2d.width * 0.5;
 		camera.zoom= 0.8;
@@ -97,7 +94,7 @@ class Game extends hxd.App {
 	}
 
 	function start() {
-		boardState= new BoardState(12, 12);
+		boardState= new BoardState(12, 13);
 
 		var startx= Std.int(s2d.width / 2);
 		var starty= Std.int(s2d.height / 2);

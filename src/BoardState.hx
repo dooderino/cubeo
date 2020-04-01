@@ -46,6 +46,20 @@ class BoardState implements hxbit.NetworkSerializable {
         for (i in 0...width*height) {
             data.push(Empty);
         }
+        var dx= 3;
+        var i= 0;
+        while (i < 6) {
+            if (dx == 8) {
+                set(0, dx, Invalid);
+                set(12, dx, Invalid);
+            }
+            else {
+                set(0, dx, BlueOne);
+                set(12, dx, RedOne);
+            }
+            ++dx;
+            ++i;
+        }
         init();
     }
 
