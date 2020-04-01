@@ -131,7 +131,6 @@ class CellView {
 
         interactive.onOut= function(e:hxd.Event) {
             CursorState= CursorStates.HoverNothing;
-            PlacementState= PlacementStates.OkMove;
         }
 
         interactive.onClick= function(e:hxd.Event) {

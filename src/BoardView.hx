@@ -32,7 +32,6 @@ class BoardView {
 
     @:rpc public function set(row:Int, col:Int, s:CellStates) {
         boardState.set(row, col, s);
-//        data[width * row + col].State= s;
     }
 
     public function get(row:Int, col:Int) {
