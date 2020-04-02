@@ -1,5 +1,6 @@
 enum abstract GameStates(Int) {
-    Idle= 0;
-    Server= 1;
-    Client= 2;
+    MainMenu= 0;
+    Idle= 1;
+    Server= 2;
+    Client= 3;
 }
