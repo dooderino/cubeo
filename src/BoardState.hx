@@ -42,27 +42,38 @@ class BoardState implements hxbit.NetworkSerializable {
         height= gridHeight;
         this.uid= uid;
         index= 0;
+
+        // Fill the board with empty squares
         data= new Array<CellStates>();
         for (i in 0...width*height) {
             data.push(Empty);
         }
 
+        // Add the default starting state, one blue and one red die
+        // in the center.
         set(6,5,RedOne);
         set(6,6,BlueOne);
 
+        // Cross out extra squares to create the dice pools for each
+        // player
         for (i in 0...width) {
+            // Cross out the last column
             set(i,12, Invalid);
 
+            // Cross out the left side of the dice pools
             if (i <= 2) {
                 set(0, i, Invalid);
                 set(12, i, Invalid);
             }
 
+            // Cross out the right side of the dice pools
             if (i >= 9) {
                 set(0, i, Invalid);
                 set(12, i, Invalid);
             }
 
+            // Fill in the dice pools with dice set to one
+            // for each player
             if (i >= 3 && i <= 7) {
                 set(0, i, BlueOne);
                 set(12, i, RedOne);
