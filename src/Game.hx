@@ -94,7 +94,7 @@ class Game extends hxd.App {
 	}
 
 	function start() {
-		boardState= new BoardState(12, 13);
+		boardState= new BoardState(13, 13);
 
 		var startx= Std.int(s2d.width / 2);
 		var starty= Std.int(s2d.height / 2);

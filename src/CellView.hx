@@ -123,10 +123,16 @@ class CellView {
         cell_hover_bmp= new Bitmap(cell_hover_anim.getFrame(), hover);
         cell_placement_bmp= new Bitmap(cell_placement_anim.getFrame(), placement);
 
-        interactive= new h2d.Interactive(obj.getBounds().width, obj.getBounds().height, cell_state_bmp);
+        interactive= new h2d.Interactive(obj.getBounds().width+padding, obj.getBounds().height+padding, cell_state_bmp);
 
         interactive.onOver= function(e:hxd.Event) {
-            CursorState= CursorStates.HoverDicePool;
+            if (State != Invalid) {
+                interactive.cursor= Hide;
+                CursorState= CursorStates.HoverDicePool;
+            } else {
+                interactive.cursor= Default;
+                CursorState= CursorStates.HoverNothing;
+            }
         }
 
         interactive.onOut= function(e:hxd.Event) {
@@ -134,10 +140,12 @@ class CellView {
         }
 
         interactive.onClick= function(e:hxd.Event) {
-            if (Game.inst.isClient)
-                boardView.set(Row, Col, CellStates.BlueFive);
-            else 
-                boardView.set(Row, Col, CellStates.RedFive);
+            if (State != Invalid) {
+                if (Game.inst.isClient)
+                    boardView.set(Row, Col, CellStates.BlueFive);
+                else 
+                    boardView.set(Row, Col, CellStates.RedFive);
+            }
         }
 
         Row= row;

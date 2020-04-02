@@ -21,7 +21,7 @@ class BoardView {
 
     public function next() {
         index++;
-        var row= Std.int(index/width);
+        var row= Std.int(index/height);
         var col= index % width;
         return data[width * row + col];
     }
