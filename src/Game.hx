@@ -24,6 +24,7 @@ class Game extends hxd.App {
 	public var host : hxd.net.SocketHost;
 	public var event : hxd.WaitEvent;
 	public var uid : Int;
+	public var gridSize : Int = 13;
 
 	override function new() {
 		super();
@@ -58,7 +59,7 @@ class Game extends hxd.App {
 			});
 			host.onMessage = function(b,uid:Int) {
 				log("Client identified ("+uid+")");
-				boardState= new BoardState(12, 12, uid);
+				boardState= new BoardState(gridSize, gridSize, uid);
 				b.ownerObject = boardState;
 				b.sync();
 				var startx= Std.int(s2d.width / 2);
@@ -94,7 +95,7 @@ class Game extends hxd.App {
 	}
 
 	function start() {
-		boardState= new BoardState(13, 13);
+		boardState= new BoardState(gridSize, gridSize);
 
 		var startx= Std.int(s2d.width / 2);
 		var starty= Std.int(s2d.height / 2);
