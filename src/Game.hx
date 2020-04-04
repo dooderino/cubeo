@@ -4,6 +4,9 @@ import h2d.Flow;
 import h2d.Text;
 import BoardState;
 import BoardView;
+import GameState;
+import ScreenManager;
+import MainMenuScreen;
 import Camera;
 
 class Game extends hxd.App {
@@ -15,11 +18,17 @@ class Game extends hxd.App {
 	var sceneWidthStart:Float;
 	var sceneHeightStart:Float;
 	var sceneDiagonalStart:Float;
+	public var sceneWidth(default, null):Float;
+	public var sceneHeight(default, null):Float;
+	public var sceneDiagonal(default, null):Float;
+	public var viewCenterX(default, null):Int;
+	public var viewCenterY(default, null):Int;
 	var fps : Text;
 	var fps_flow : Flow;
 	var flow : Flow;
 	public var boardState : BoardState;
 	public var view : BoardView;
+	public var gameState : GameState;
 	public var camera : Camera;
 	public var host : hxd.net.SocketHost;
 	public var event : hxd.WaitEvent;
@@ -31,6 +40,16 @@ class Game extends hxd.App {
 	}
 
 	override function init() {
+		camera= new Camera(s2d);
+		camera.viewX= s2d.width * 0.5;
+
+		sceneWidthStart= s2d.width;
+		sceneHeightStart= s2d.height;
+		sceneDiagonalStart= Math.sqrt(sceneWidthStart*sceneWidthStart + sceneHeightStart*sceneHeightStart);
+
+		calculateSceneBounds();
+		calculateViewCenter();
+		calculateCameraZoom();
 
 		event = new hxd.WaitEvent();
 		host = new hxd.net.SocketHost();
@@ -49,9 +68,11 @@ class Game extends hxd.App {
 		sceneHeightStart= s2d.height;
 		sceneDiagonalStart= Math.sqrt(sceneWidthStart*sceneWidthStart + sceneHeightStart*sceneHeightStart);
 
-		camera= new Camera(s2d);
-		camera.viewX= s2d.width * 0.5;
-		camera.zoom= 0.8;
+		screenManager = new ScreenManager(camera);
+		screenManager.setScreen(new MainMenuScreen());
+		
+
+		/*
 
 		try {
 			host.wait(HOST, PORT, function(c) {
@@ -92,6 +113,8 @@ class Game extends hxd.App {
 			isClient= true;
 
 		}
+
+		*/
 	}
 
 	function start() {
@@ -120,20 +143,31 @@ class Game extends hxd.App {
 		super.render(e);
 	}
 
-	public override function onResize() {
-		var sceneWidth= s2d.width;
-		var sceneHeight= s2d.height;
-		var sceneDiagonal= Math.sqrt(sceneWidth*sceneWidth + sceneHeight*sceneHeight);
+	public function calculateSceneBounds() {
+		sceneWidth= s2d.width;
+		sceneHeight= s2d.height;
+		sceneDiagonal= Math.sqrt(sceneWidth*sceneWidth + sceneHeight*sceneHeight);
+	}
+
+	public function calculateViewCenter() {
+		viewCenterX= Std.int(s2d.width / 2);
+		viewCenterY= Std.int(s2d.height / 2);
+	}
+
+	public function calculateCameraZoom() {
 		var zoom= sceneDiagonal / sceneDiagonalStart;
-
 		camera.zoom= zoom * 0.8;
+	}
 
-		var viewCenterX= Std.int(s2d.width / 2);
-		var viewCenterY= Std.int(s2d.height / 2);
+	public override function onResize() {
+		calculateSceneBounds();
+		calculateViewCenter();
+		calculateCameraZoom();
 		view.setPosition(viewCenterX, viewCenterY);
 	}
 
 	public static var inst : Game;
+	public static var screenManager : ScreenManager;
 	
 	static function main() {
 		hxd.Res.initEmbed();

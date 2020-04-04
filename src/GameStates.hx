@@ -1,6 +1,5 @@
 enum abstract GameStates(Int) {
-    MainMenu= 0;
-    Idle= 1;
-    Server= 2;
-    Client= 3;
+    var Idle= 1;
+    var Server= 2;
+    var Client= 3;
 }
