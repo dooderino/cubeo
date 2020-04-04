@@ -1,6 +1,7 @@
 package;
 
 import Game;
+import GameplayScreen;
 import GameStates;
 import h2d.Interactive;
 import h2d.Font;
@@ -12,14 +13,17 @@ import h2d.TextInput;
 class MainMenuScreen extends Screen {
     var hostButton : Graphics;
     var hostText : Text;
+    var hostInteractive : Interactive;
     var joinButton : Graphics;
-    var joinText : Graphics;
+    var joinText : Text;
+    var joinInteractive : Interactive;
     var ipAddress : TextInput;
     var port : TextInput;
+    var portText : Text;
     var font : Font;    
 
     public function new() {
-        super();
+        super("MainMenuScreen");
     }
 
     public override function init(object:Object) {
@@ -45,6 +49,7 @@ class MainMenuScreen extends Screen {
             hostButton.lineTo(-size + RH * Math.cos(a), RH * Math.sin(a));
         }
         hostButton.endFill();
+        hostButton.color.set(0.8,0.8,0.8);
 
         hostButton.x = Game.inst.sceneWidth/2 + 200;
         hostButton.y = Game.inst.sceneHeight/2 - 60;
@@ -56,6 +61,42 @@ class MainMenuScreen extends Screen {
         hostText.y -= 20;
         hostText.scale(2.5);
 
+        hostButton.scale(2);
+
+        hostInteractive = 
+            new Interactive(
+                    hostButton.getBounds().width,
+                    hostButton.getBounds().height, 
+                    hostButton,
+                    new h2d.col.RoundRect(0, 0, 2*RW, 2*RH, 0));
+
+        hostInteractive.onOver = function(e:hxd.Event) {
+            hostButton.color.set(1, 1, 1);
+        }
+
+        hostInteractive.onOut = function(e:hxd.Event) {
+            hostButton.color.set(0.7,0.7,0.8);
+        }
+
+        hostInteractive.onClick = function(e:hxd.Event) {
+            joinButton.visible = false;
+            port.visible = true;
+            port.backgroundColor = 0x80808080;
+            port.x = hostButton.x;
+            hostText.text = "Start";
+            hostInteractive.onClick = function(_) {
+                Game.screenManager.setScreen(new GameplayScreen());
+            }
+        }
+
+        hostInteractive.onPush = function(e:hxd.Event) {
+            hostButton.color.set(0.9,1,0.6);
+        }
+
+        hostInteractive.onRelease = function(e:hxd.Event) {
+            hostButton.color.set(1,1,1);
+        }
+    
         joinButton = new h2d.Graphics(object);
         joinButton.beginFill(0xFFFFFFFF);
         for( i in 0...k+1 ) {
@@ -69,11 +110,19 @@ class MainMenuScreen extends Screen {
         joinButton.endFill();
 
         joinButton.x = Game.inst.sceneWidth/2 + 200;
-        joinButton.y = Game.inst.sceneHeight/2 + 60;
+        joinButton.y = Game.inst.sceneHeight/2 + 120;
 
+        joinText = new Text(font, joinButton);
+        joinText.text = "Join Game";
+        joinText.textColor = 0x000000;
+        joinText.textAlign = Align.Center;
+        joinText.y -= 20;
+        joinText.scale(2.5);
+
+        joinButton.scale(2);
         
         ipAddress = new TextInput(font, object);
-        ipAddress.scale(2);
+        ipAddress.scale(4);
         ipAddress.x = Game.inst.viewCenterX;
         ipAddress.y = Game.inst.viewCenterY;
         ipAddress.text = "127.0.0.1";
@@ -93,7 +142,7 @@ class MainMenuScreen extends Screen {
         }
 
         port = new TextInput(font, object);
-        port.scale(2);
+        port.scale(4);
         port.x = Game.inst.viewCenterX;
         port.y = Game.inst.viewCenterY + 50;
         port.text= "6676";
@@ -111,6 +160,16 @@ class MainMenuScreen extends Screen {
             while (port.text.length > 5)
                 port.text = port.text.substr(0, -1);
         }
+
+        portText = new Text(font, port);
+        portText.text = "Port:";
+        portText.textColor = 0xFFFFFF;
+        portText.x = -32;
+
+        ipAddress.visible = false;
+        ipAddress.backgroundColor = 0x0;
+        port.visible = false;
+        port.backgroundColor = 0x0;
     }
 
     public override function update(dt:Float) {
@@ -119,7 +178,8 @@ class MainMenuScreen extends Screen {
 
     public override function cleanup() {
         super.cleanup();
-        font.dispose();
+
+        parent.removeChild(hostButton);
         parent.removeChild(joinButton);
         parent.removeChild(ipAddress);
         parent.removeChild(port);

@@ -26,6 +26,7 @@ class Game extends hxd.App {
 	var fps : Text;
 	var fps_flow : Flow;
 	var flow : Flow;
+	var screenName : Text;
 	public var boardState : BoardState;
 	public var view : BoardView;
 	public var gameState : GameState;
@@ -55,7 +56,7 @@ class Game extends hxd.App {
 		host = new hxd.net.SocketHost();
 		host.setLogger(function(msg) log(msg));
 
-	    flow= new h2d.Flow(s2d);
+		flow= new h2d.Flow(s2d);
 	    flow.padding= 20;
 
 		fps_flow= new h2d.Flow(flow);
@@ -63,15 +64,23 @@ class Game extends hxd.App {
 		fps= new h2d.Text(DefaultFont.get(), fps_flow); 
 		fps.text= "FPS: " + Std.string(0.0);
 		fps.setScale(2.0);
-
+		screenName = new h2d.Text(DefaultFont.get(), fps_flow);
+		screenName.text = "No Screen Active";
+		screenName.setScale(2);
+    
 		sceneWidthStart= s2d.width;
 		sceneHeightStart= s2d.height;
-		sceneDiagonalStart= Math.sqrt(sceneWidthStart*sceneWidthStart + sceneHeightStart*sceneHeightStart);
+		sceneDiagonalStart= 
+			Math.sqrt(sceneWidthStart*sceneWidthStart + sceneHeightStart*sceneHeightStart);
 
 		screenManager = new ScreenManager(camera);
+
+		screenManager.onScreenChange = function() {
+			screenName.text = screenManager.currentScreen.name;
+		}
+
 		screenManager.setScreen(new MainMenuScreen());
 		
-
 		/*
 
 		try {
