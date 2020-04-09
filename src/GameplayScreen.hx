@@ -1,9 +1,10 @@
 package;
 
+import GameStates;
 import h2d.Object;
 
 class GameplayScreen extends Screen {
-    public function new() {
+    public function new(gameState:GameStates, ip:String, port:String) {
        super("GameplayScreen"); 
     }
 

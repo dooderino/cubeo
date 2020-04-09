@@ -120,6 +120,44 @@ class MainMenuScreen extends Screen {
         joinText.scale(2.5);
 
         joinButton.scale(2);
+
+        joinInteractive = 
+            new Interactive(
+                    joinButton.getBounds().width,
+                    joinButton.getBounds().height, 
+                    joinButton,
+                    new h2d.col.RoundRect(0, 0, 2*RW, 2*RH, 0));
+
+        joinInteractive.onOver = function(e:hxd.Event) {
+            joinButton.color.set(1, 1, 1);
+        }
+
+        joinInteractive.onOut = function(e:hxd.Event) {
+            joinButton.color.set(0.7,0.7,0.8);
+        }
+
+        joinInteractive.onClick = function(e:hxd.Event) {
+            hostButton.visible = false;
+            ipAddress.visible = true;
+            ipAddress.backgroundColor = 0x808080;
+            ipAddress.x = joinButton.x;
+
+            port.visible = true;
+            port.backgroundColor = 0x808080;
+            port.x = joinButton.x;
+            joinText.text = "Start";
+            joinInteractive.onClick = function(_) {
+                Game.screenManager.setScreen(new GameplayScreen());
+            }
+        }
+
+        joinInteractive.onPush = function(e:hxd.Event) {
+            joinButton.color.set(0.9,1,0.6);
+        }
+
+        joinInteractive.onRelease = function(e:hxd.Event) {
+            joinButton.color.set(1,1,1);
+        }
         
         ipAddress = new TextInput(font, object);
         ipAddress.scale(4);
