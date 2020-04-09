@@ -10,17 +10,17 @@ class BoardIterator {
   var boardState:BoardState;
 
   public inline function new(board:BoardState) {
-    this.width = board.width;
-    this.height = board.height;
-    this.boardState= board;
+	this.width = board.width;
+	this.height = board.height;
+	this.boardState= board;
   }
 
   public inline function hasNext() {
-    return index < width * height;
+	return index < width * height;
   }
 
   public inline function next() {
-    return new BoardIteratorObject(index++, boardState);
+	return new BoardIteratorObject(index++, boardState);
   }
 }
 

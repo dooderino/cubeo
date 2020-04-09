@@ -3,20 +3,24 @@ package;
 import h2d.Object;
 
 class Screen {
-    public var parent : Object;
-    public var name : String;
+	public var parent : Object;
+	public var name : String;
 
-    public function new(name:String) {
-        this.name = name;
-    }
+	public function new(name:String, ?parent:Object) {
+		this.name = name;
+		this.parent = parent;
+	}
 
-    public function init(object:Object) {
-        parent = object;
-    }
+	public function log( s : String, ?pos : haxe.PosInfos ) {
+		haxe.Log.trace(s, pos);
+	}
 
-    public function update(dt:Float) {
-    }
+	public function init() {
+	}
 
-    public function cleanup() {
-    }
+	public function update(dt:Float) {
+	}
+
+	public function cleanup() {
+	}
 }

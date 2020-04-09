@@ -10,11 +10,6 @@ import MainMenuScreen;
 import Camera;
 
 class Game extends hxd.App {
-	static var HOST = "127.0.0.1";
-	static var PORT = 6676;
-	public var isServer : Bool;
-	public var isClient : Bool;
-
 	var sceneWidthStart:Float;
 	var sceneHeightStart:Float;
 	var sceneDiagonalStart:Float;
@@ -27,13 +22,7 @@ class Game extends hxd.App {
 	var fps_flow : Flow;
 	var flow : Flow;
 	var screenName : Text;
-	public var boardState : BoardState;
-	public var view : BoardView;
-	public var gameState : GameState;
 	public var camera : Camera;
-	public var host : hxd.net.SocketHost;
-	public var event : hxd.WaitEvent;
-	public var uid : Int;
 	public var gridSize : Int = 13;
 
 	override function new() {
@@ -52,12 +41,8 @@ class Game extends hxd.App {
 		calculateViewCenter();
 		calculateCameraZoom();
 
-		event = new hxd.WaitEvent();
-		host = new hxd.net.SocketHost();
-		host.setLogger(function(msg) log(msg));
-
 		flow= new h2d.Flow(s2d);
-	    flow.padding= 20;
+		flow.padding= 20;
 
 		fps_flow= new h2d.Flow(flow);
 		fps_flow.layout= FlowLayout.Vertical;
@@ -67,7 +52,7 @@ class Game extends hxd.App {
 		screenName = new h2d.Text(DefaultFont.get(), fps_flow);
 		screenName.text = "No Screen Active";
 		screenName.setScale(2);
-    
+	
 		sceneWidthStart= s2d.width;
 		sceneHeightStart= s2d.height;
 		sceneDiagonalStart= 
@@ -79,71 +64,15 @@ class Game extends hxd.App {
 			screenName.text = screenManager.currentScreen.name;
 		}
 
-		screenManager.setScreen(new MainMenuScreen());
-		
-		/*
-
-		try {
-			host.wait(HOST, PORT, function(c) {
-				log("Client Connected");
-			});
-			host.onMessage = function(b,uid:Int) {
-				log("Client identified ("+uid+")");
-				boardState= new BoardState(gridSize, gridSize, uid);
-				b.ownerObject = boardState;
-				b.sync();
-				var startx= Std.int(s2d.width / 2);
-				var starty= Std.int(s2d.height / 2);
-
-				view= new BoardView(boardState, camera);
-				view.setPosition(startx, starty);
-			};
-			log("Server Started");
-
-			isServer= true;
-
-			start();
-
-		} catch( e : Dynamic ) {
-
-			// we could not start the server
-			log("Connecting");
-
-			uid = 1 + Std.random(1000);
-			host.connect(HOST, PORT, function(b) {
-				if( !b ) {
-					log("Failed to connect to server");
-					return;
-				}
-				log("Connected to server");
-				host.sendMessage(uid);
-			});
-
-			isClient= true;
-
-		}
-
-		*/
+		screenManager.setScreen(new MainMenuScreen(camera));
 	}
 
-	function start() {
-		boardState= new BoardState(gridSize, gridSize);
-
-		var startx= Std.int(s2d.width / 2);
-		var starty= Std.int(s2d.height / 2);
-
-		view= new BoardView(boardState, camera);
-		view.setPosition(startx, starty);
-
-		log("Live");
-		host.makeAlive();
+	public function log( s : String, ?pos : haxe.PosInfos ) {
+		screenManager.currentScreen.log(s, pos);
 	}
 
 	override function update(dt:Float) {
-		event.update(dt);
-		host.flush();
-		if (view != null)
-			view.updateView();
+		screenManager.update(dt);
 	}
 
 	override function render(e:h3d.Engine) {
@@ -181,10 +110,5 @@ class Game extends hxd.App {
 	static function main() {
 		hxd.Res.initEmbed();
 		inst= new Game();
-	}
-
-	public function log( s : String, ?pos : haxe.PosInfos ) {
-		pos.fileName = (host.isAuth ? "[S]" : "[C]") + " " + pos.fileName;
-		haxe.Log.trace(s, pos);
 	}
 }
