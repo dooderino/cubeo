@@ -9,14 +9,14 @@ import h2d.Object;
 class GameplayScreen extends Screen {
 	var ip : String;
 	var port : Int;
-	var host : hxd.net.SocketHost;
-	var event : hxd.WaitEvent;
-	var uid : Int;
-	var state : GameStates;
+	public var host : hxd.net.SocketHost;
+	public var event : hxd.WaitEvent;
+	public var uid : Int;
+	public var state : GameStates;
 
 	public var boardState : BoardState;
 	public var boardView : BoardView;
-	public var gridSize : Int;
+	public var gridSize : Int = 13;
 
 	public function new(gameState:GameStates, ip:String, port:String, ?parent:Object) {
 		super("GameplayScreen", parent); 
@@ -53,7 +53,7 @@ class GameplayScreen extends Screen {
 
 		host.onMessage = function(b,uid:Int) {
 			log("Client identified ("+uid+")");
-			boardState= new BoardState(gridSize, gridSize, uid);
+			boardState= new BoardState(gridSize, gridSize, this, uid);
 			b.ownerObject = boardState;
 			b.sync();
 			var startx= Std.int(Game.inst.s2d.width / 2);
@@ -68,12 +68,12 @@ class GameplayScreen extends Screen {
 	}
 
 	function start() {
-		boardState= new BoardState(gridSize, gridSize);
+		boardState= new BoardState(gridSize, gridSize, this);
 
-		var startx= Std.int(s2d.width / 2);
-		var starty= Std.int(s2d.height / 2);
+		var startx= Std.int(Game.inst.s2d.width / 2);
+		var starty= Std.int(Game.inst.s2d.height / 2);
 
-		boardView= new BoardView(boardState, camera);
+		boardView= new BoardView(boardState, parent);
 		boardView.setPosition(startx, starty);
 
 		log("Live");

@@ -1,6 +1,7 @@
 package;
 
 import h2d.Object;
+import GameplayScreen;
 import CellView;
 import BoardState;
 import BoardIterator;
@@ -14,6 +15,7 @@ class BoardView {
 	var root : h2d.Object;
 	var data:Array<CellView>; 
 	var boardState: BoardState;
+	public var game : GameplayScreen;
 
 	public function hasNext() {
 		return index < width * height;
@@ -51,6 +53,7 @@ class BoardView {
 	}
 
 	public function new(board:BoardState, object:Object) {
+		game = board.game;
 		boardState= board;
 		root= object;
 		width= boardState.width;

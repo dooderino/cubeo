@@ -1,9 +1,9 @@
-
+import GameplayScreen;
 import CellStates;
 import hxbit.NetworkSerializable;
 
 class BoardState implements hxbit.NetworkSerializable {
-	var game : Game;
+	public var game : GameplayScreen;
 	@:s public var width:Int;
 	@:s public var height:Int;
 	var index(default, null):Int =0;
@@ -37,9 +37,10 @@ class BoardState implements hxbit.NetworkSerializable {
 		return client == this;
 	}
 
-	public function new(gridWith:Int, gridHeight:Int, uid= 0) {
+	public function new(gridWith:Int, gridHeight:Int, owner:GameplayScreen, uid= 0) {
 		width= gridWith;
 		height= gridHeight;
+		game= owner;
 		this.uid= uid;
 		index= 0;
 
@@ -84,7 +85,7 @@ class BoardState implements hxbit.NetworkSerializable {
 	}
 
 	function init() {
-		game= Game.inst;
+		game = cast Game.screenManager.currentScreen;
 		game.log("Init " + this);
 		enableReplication= true;
 	}
@@ -92,13 +93,13 @@ class BoardState implements hxbit.NetworkSerializable {
 	public function alive() {
 		init();
 
-		if( uid != 0 && uid == game.uid && game.isClient ) {
+		if (uid != 0 && uid == game.uid && game.state == GameStates.Client) {
 			game.boardState = this;
 			game.host.self.ownerObject = this;
-			var startx= Std.int(game.s2d.width / 2);
-			var starty= Std.int(game.s2d.height / 2);
-			game.view= new BoardView(this, game.camera);
-			game.view.setPosition(startx, starty);
+			var startx= Std.int(Game.inst.s2d.width / 2);
+			var starty= Std.int(Game.inst.s2d.height / 2);
+			game.boardView= new BoardView(this, Game.inst.camera);
+			game.boardView.setPosition(startx, starty);
 		}
 	}
 }

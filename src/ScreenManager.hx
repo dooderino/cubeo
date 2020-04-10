@@ -14,7 +14,7 @@ class ScreenManager {
 		if (currentScreen != null)
 			currentScreen.cleanup();
 		currentScreen = screen;
-		currentScreen.init(root);
+		currentScreen.init();
 		onScreenChange();
 	}
 

@@ -2,9 +2,6 @@ import hxd.Res;
 import hxd.res.DefaultFont;
 import h2d.Flow;
 import h2d.Text;
-import BoardState;
-import BoardView;
-import GameState;
 import ScreenManager;
 import MainMenuScreen;
 import Camera;
@@ -101,7 +98,13 @@ class Game extends hxd.App {
 		calculateSceneBounds();
 		calculateViewCenter();
 		calculateCameraZoom();
-		view.setPosition(viewCenterX, viewCenterY);
+
+		try {
+			var screen = cast(screenManager.currentScreen, GameplayScreen);
+			screen.boardView.setPosition(viewCenterX, viewCenterY);
+		} catch (e:Dynamic) {
+
+		}
 	}
 
 	public static var inst : Game;

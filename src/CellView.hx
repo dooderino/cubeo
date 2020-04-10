@@ -141,7 +141,7 @@ class CellView {
 
 		interactive.onClick= function(e:hxd.Event) {
 			if (State != Invalid) {
-				if (Game.inst.isClient)
+				if (view.game.state == GameStates.Client)
 					boardView.set(Row, Col, CellStates.BlueFive);
 				else 
 					boardView.set(Row, Col, CellStates.RedFive);

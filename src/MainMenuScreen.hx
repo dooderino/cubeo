@@ -18,6 +18,7 @@ class MainMenuScreen extends Screen {
 	var joinText : Text;
 	var joinInteractive : Interactive;
 	var ipAddress : TextInput;
+	var ipText : Text;
 	var port : TextInput;
 	var portText : Text;
 	var font : Font;	
@@ -28,8 +29,6 @@ class MainMenuScreen extends Screen {
 
 	public override function init() {
 		super.init();
-
-		Game.inst.gameState = new GameState();
 
 		font = hxd.res.DefaultFont.get();
 
@@ -86,7 +85,7 @@ class MainMenuScreen extends Screen {
 			hostText.text = "Start";
 			hostInteractive.onClick = function(_) {
 				Game.screenManager.setScreen(
-					new GameplayScreen(GameStates.Server, ipAddress.text, port.text));
+					new GameplayScreen(GameStates.Server, ipAddress.text, port.text, parent));
 			}
 		}
 
@@ -98,7 +97,7 @@ class MainMenuScreen extends Screen {
 			hostButton.color.set(1,1,1);
 		}
 	
-		joinButton = new h2d.Graphics(object);
+		joinButton = new h2d.Graphics(this.parent);
 		joinButton.beginFill(0xFFFFFFFF);
 		for( i in 0...k+1 ) {
 			var a = Math.PI * i / k - Math.PI / 2;
@@ -140,16 +139,18 @@ class MainMenuScreen extends Screen {
 		joinInteractive.onClick = function(e:hxd.Event) {
 			hostButton.visible = false;
 			ipAddress.visible = true;
-			ipAddress.backgroundColor = 0x808080;
-			ipAddress.x = joinButton.x;
+			ipAddress.backgroundColor = 0x80808080;
+			ipAddress.x = joinButton.x - 80;
+			ipAddress.y -= 70;
 
 			port.visible = true;
-			port.backgroundColor = 0x808080;
-			port.x = joinButton.x;
+			port.backgroundColor = 0x80808080;
+			port.x = joinButton.x - 15;
+			port.y -= 60;
 			joinText.text = "Start";
 			joinInteractive.onClick = function(_) {
 				Game.screenManager.setScreen(
-					new GameplayScreen(GameStates.Client, ipAddress.text, port.text));
+					new GameplayScreen(GameStates.Client, ipAddress.text, port.text, parent));
 			}
 		}
 
@@ -161,7 +162,7 @@ class MainMenuScreen extends Screen {
 			joinButton.color.set(1,1,1);
 		}
 		
-		ipAddress = new TextInput(font, object);
+		ipAddress = new TextInput(font, parent);
 		ipAddress.scale(4);
 		ipAddress.x = Game.inst.viewCenterX;
 		ipAddress.y = Game.inst.viewCenterY;
@@ -181,7 +182,12 @@ class MainMenuScreen extends Screen {
 				ipAddress.text = ipAddress.text.substr(0, -1);
 		}
 
-		port = new TextInput(font, object);
+		ipText = new Text(font, ipAddress);
+		ipText.text= "IP: ";
+		ipText.textColor= 0xFFFFFF;
+		ipText.x = -15;
+
+		port = new TextInput(font, parent);
 		port.scale(4);
 		port.x = Game.inst.viewCenterX;
 		port.y = Game.inst.viewCenterY + 50;
