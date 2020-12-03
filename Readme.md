@@ -1,5 +1,5 @@
 # [Cubeo](https://boardgamegeek.com/boardgame/191916/cubeo)
-[![Build Status](https://travis-ci.org/dooderino/cubeo.svg?branch=master)](https://travis-ci.org/dooderino/cubeo)
+[![Build Status](https://travis-ci.com/dooderino/cubeo.svg?branch=master)](https://travis-ci.com/dooderino/cubeo)
 
 
 # Todo
