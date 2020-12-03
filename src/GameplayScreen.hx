@@ -48,7 +48,7 @@ class GameplayScreen extends Screen {
 
 	function initServer() {
 		host.wait(ip, port, function(c) {
-			log("Client Connected");
+			log("Client Connected.");
 		});
 
 		host.onMessage = function(b,uid:Int) {
@@ -62,7 +62,7 @@ class GameplayScreen extends Screen {
 			boardView= new BoardView(boardState, parent);
 			boardView.setPosition(startx, starty);
 		};
-		log("Server Started");
+		log("Server Started.");
 
 		start();
 	}
