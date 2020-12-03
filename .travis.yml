@@ -30,7 +30,6 @@ deploy:
   keep_history: true
   strategy : git
   overwrite: true
-  file: cubeo.zip
   edge: true
   on:
     branch: master
