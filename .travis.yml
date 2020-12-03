@@ -25,13 +25,8 @@ before_deploy:
 
 deploy:
   provider: pages
-  cleanup: false
-  token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  file_glob: true
-  overwrite: true
-  file: cubeo.zip
-  release_notes_file: release_notes.txt
-  draft: true
-  edge: true
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
   on:
     branch: master
