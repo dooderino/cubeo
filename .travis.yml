@@ -28,14 +28,8 @@ deploy:
   edge:
     branch: master
   token: ${GITHUB_TOKEN}
-  file_glob: true
   name: latest development build
-  release_notes:
-    Warning, this is a development build and not fully tested. Use at your own risk.
-    I have no idea what I am doing.
   cleanup: false
-  prerelease: true
-  overwrite: true
   on:
     tags: false
     branch: master
