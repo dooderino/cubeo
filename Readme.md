@@ -1,5 +1,6 @@
-#Cubeo [BoardgameGeek](https://boardgamegeek.com/boardgame/191916/cubeo)
+# Cubeo 
 [![Build Status](https://travis-ci.org/dooderino/cubeo.svg?branch=master)](https://travis-ci.org/dooderino/cubeo)
+[See Cubeo on BoardgameGeek](https://boardgamegeek.com/boardgame/191916/cubeo)
 
 # Todo
 - [ ] Setup state machine for game (idle, client, server)
