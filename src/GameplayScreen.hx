@@ -80,7 +80,6 @@ class GameplayScreen extends Screen {
 		host.makeAlive();
 	}
 
-
 	function initClient() {
 		log("Connecting");
 
