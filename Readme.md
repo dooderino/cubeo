@@ -1,4 +1,4 @@
-# Cubeo [See Cubeo on BoardgameGeek](https://boardgamegeek.com/boardgame/191916/cubeo)
+# [Cubeo](https://boardgamegeek.com/boardgame/191916/cubeo)
 [![Build Status](https://travis-ci.org/dooderino/cubeo.svg?branch=master)](https://travis-ci.org/dooderino/cubeo)
 
 
