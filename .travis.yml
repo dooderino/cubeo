@@ -24,7 +24,7 @@ before_deploy:
   - zip -r cubeo.zip ./ --exclude=*LICENSE* --exclude=*.git* --exclude=*.vscode* --exclude=*src* --exclude=*.gitattributes* --exclude=*.gitignore* --exclude=*.yml* --exclude=*.hxml* --exclude=*.md* --exclude=*.bat*
 
 deploy:
-  provider: releases
+  provider: pages
   cleanup: false
   token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   file_glob: true
