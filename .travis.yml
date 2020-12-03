@@ -29,7 +29,6 @@ deploy:
     branch: master
   token: ${GITHUB_TOKEN}
   file_glob: true
-  file: "cubeo.zip"
   name: latest development build
   release_notes:
     Warning, this is a development build and not fully tested. Use at your own risk.
