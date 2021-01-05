@@ -1,0 +1,33 @@
+language: haxe
+
+haxe:
+  - 4.0.2
+
+install:
+  - haxelib git hscript https://github.com/HaxeFoundation/hscript.git
+  - haxelib git hxbit https://github.com/HeapsIO/hxbit.git
+  - haxelib git heaps https://github.com/HeapsIO/heaps.git
+  - haxelib git castle https://github.com/ncannasse/castle.git
+  - haxelib install format
+  - haxelib install hldx
+  - haxelib install hlopenal
+
+script:
+  - haxe hl.hxml
+  - haxe js.hxml
+  - haxe swf.hxml
+
+notifications:
+  slack: anagrammages:EtIhHhWsEUggGCYKulnafX3V
+
+before_deploy:
+  - zip -r cubeo.zip ./ --exclude=*LICENSE* --exclude=*.git* --exclude=*.vscode* --exclude=*src* --exclude=*.gitattributes* --exclude=*.gitignore* --exclude=*.yml* --exclude=*.hxml* --exclude=*.md* --exclude=*.bat*
+  - git add cubeo.zip
+
+deploy:
+  provider: pages:git
+  cleanup: true
+  token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: false
+  edge: true
+  

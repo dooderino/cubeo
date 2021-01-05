@@ -1,0 +1,8 @@
+-lib heaps
+-lib hxbit
+-lib hscript
+-js bin/js/game.js
+-main Game
+-cp ./src
+-debug
+-D resourcesPath=./resources
