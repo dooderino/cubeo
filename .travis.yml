@@ -22,12 +22,12 @@ notifications:
 
 before_deploy:
   - zip -r cubeo.zip ./ --exclude=*LICENSE* --exclude=*.git* --exclude=*.vscode* --exclude=*src* --exclude=*.gitattributes* --exclude=*.gitignore* --exclude=*.yml* --exclude=*.hxml* --exclude=*.md* --exclude=*.bat*
-  - git add cubeo.zip
 
 deploy:
-  provider: pages:git
+  provider: releases
   cleanup: true
   token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep_history: false
+  draft: true
+  file: cubeo.zip
   edge: true
-  
