@@ -21,6 +21,7 @@ notifications:
   slack: anagrammages:EtIhHhWsEUggGCYKulnafX3V
 
 before_deploy:
+  - mkdir ./build
   - zip -r ./build/cubeo.zip ./ --exclude=*LICENSE* --exclude=*.git* --exclude=*.vscode* --exclude=*src* --exclude=*.gitattributes* --exclude=*.gitignore* --exclude=*.yml* --exclude=*.hxml* --exclude=*.md* --exclude=*.bat*
 
 deploy:
