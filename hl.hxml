@@ -2,7 +2,7 @@
 -lib hldx
 -lib hxbit
 -lib hscript
--hl bin/hl/game.hl
+-hl bin/hl/hlboot.dat
 -main Game
 -D windowSize=1600x900
 -cp ./src
