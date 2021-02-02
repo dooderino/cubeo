@@ -11,7 +11,7 @@ class Screen {
 		this.parent = parent;
 	}
 
-	public function log( s : String, ?pos : haxe.PosInfos ) {
+	public function log( s : String, ?pos : haxe.PosInfos, ?updateUI : Bool = false ) {
 		haxe.Log.trace(s, pos);
 	}
 

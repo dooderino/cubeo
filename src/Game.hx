@@ -42,6 +42,7 @@ class Game extends hxd.App {
 		flow.padding= 20;
 
 		fps_flow= new h2d.Flow(flow);
+		fps_flow.name= "fps_flow";
 		fps_flow.layout= FlowLayout.Vertical;
 		fps= new h2d.Text(DefaultFont.get(), fps_flow); 
 		fps.text= "FPS: " + Std.string(0.0);

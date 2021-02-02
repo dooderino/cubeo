@@ -1,5 +1,7 @@
 package;
 
+import hxd.res.DefaultFont;
+import h2d.Text;
 import BoardState;
 import BoardView;
 import Game;
@@ -18,6 +20,8 @@ class GameplayScreen extends Screen {
 	public var boardView : BoardView;
 	public var gridSize : Int = 13;
 
+	var status : Text;
+
 	public function new(gameState:GameStates, ip:String, port:String, ?parent:Object) {
 		super("GameplayScreen", parent); 
 
@@ -25,13 +29,19 @@ class GameplayScreen extends Screen {
 		this.port = Std.parseInt(port);
 		this.state = gameState;
 
+		var fps_flow = parent.getScene().getObjectByName("fps_flow");
+		this.status = new Text(DefaultFont.get(), fps_flow);
+		this.status.setScale(2.0);
+
 		event = new hxd.WaitEvent();
 		host = new hxd.net.SocketHost();
 		host.setLogger(function(msg) log(msg));
 	}
 
-	public override function log( s : String, ?pos : haxe.PosInfos ) {
+	public override function log( s : String, ?pos : haxe.PosInfos, ?updateUI : Bool = false ) {
 		pos.fileName = (host.isAuth ? "[S]" : "[C]") + " " + pos.fileName;
+		if (updateUI == true) 
+			this.status.text = s;
 		haxe.Log.trace(s, pos);
 	}
 
@@ -48,11 +58,12 @@ class GameplayScreen extends Screen {
 
 	function initServer() {
 		host.wait(ip, port, function(c) {
-			log("Client Connected.");
+			log("Client Connected.", true);
 		});
 
 		host.onMessage = function(b,uid:Int) {
 			log("Client identified ("+uid+")");
+			log("Client connected.", true);
 			boardState= new BoardState(gridSize, gridSize, this, uid);
 			b.ownerObject = boardState;
 			b.sync();
@@ -62,7 +73,7 @@ class GameplayScreen extends Screen {
 			boardView= new BoardView(boardState, parent);
 			boardView.setPosition(startx, starty);
 		};
-		log("Server Started.");
+		log("Server Started.", true);
 
 		start();
 	}
@@ -76,20 +87,20 @@ class GameplayScreen extends Screen {
 		boardView= new BoardView(boardState, parent);
 		boardView.setPosition(startx, starty);
 
-		log("Live");
+		log("Waiting for client...", true);
 		host.makeAlive();
 	}
 
 	function initClient() {
-		log("Connecting");
+		log("Connecting", true);
 
 		uid = 1 + Std.random(1000);
 		host.connect(ip, port, function(b) {
 			if( !b ) {
-				log("Failed to connect to server");
+				log("Failed to connect to server", true);
 				return;
 			}
-			log("Connected to server");
+			log("Connected to server", true);
 			host.sendMessage(uid);
 		});
 	}
